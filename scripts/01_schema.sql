@@ -61,6 +61,26 @@ CREATE INDEX IF NOT EXISTS idx_cost_entries_provider_date
 CREATE INDEX IF NOT EXISTS idx_cost_entries_date
     ON finops_source.cost_entries (usage_date);
 
+CREATE INDEX IF NOT EXISTS idx_cost_entries_created_at
+    ON finops_source.cost_entries (created_at);
+
+CREATE INDEX IF NOT EXISTS idx_teams_created_at
+    ON finops_source.teams (created_at);
+
+CREATE INDEX IF NOT EXISTS idx_budgets_created_at
+    ON finops_source.budgets (created_at);
+
+-- =============================================================
+-- CONTROLE DE PIPELINE (finops_source)
+-- =============================================================
+
+CREATE TABLE IF NOT EXISTS finops_source.pipeline_watermarks (
+    entity             VARCHAR(50)  PRIMARY KEY,
+    last_processed_at  TIMESTAMP    NOT NULL,
+    last_run_rows      INT,
+    updated_at         TIMESTAMP    NOT NULL DEFAULT NOW()
+);
+
 -- =============================================================
 -- TABELAS GOLD (finops_gold — serving para Metabase)
 -- Criadas vazias; preenchidas pelo notebook 05_gold_load_postgres
