@@ -1,0 +1,88 @@
+site_name: FinOps Pipeline
+site_description: Pipeline de dados com arquitetura medallion para FinOps — Spark, Delta Lake, Airflow, Metabase
+site_author: Felipe Rossetto
+site_url: https://felipp2t.github.io/finops-pipeline/
+repo_url: https://github.com/felipp2t/finops-pipeline
+repo_name: felipp2t/finops-pipeline
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: pt
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: pt
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Início: index.md
+  - Como começar:
+    - Requisitos: getting-started/requirements.md
+    - Quickstart: getting-started/quickstart.md
+    - Configuração: getting-started/configuration.md
+  - Arquitetura:
+    - Visão geral: architecture/index.md
+    - Modelo relacional: architecture/domain-model.md
+    - Camadas Medallion: architecture/medallion.md
+    - Decisões (ADRs):
+      - Índice: architecture/decisions/index.md
+      - ADR-001 Domínio FinOps: architecture/decisions/001-domain-finops.md
+      - ADR-002 MinIO + Delta Lake: architecture/decisions/002-storage-minio-delta.md
+      - ADR-003 Estrutura de DAGs: architecture/decisions/003-dag-structure.md
+      - ADR-004 Notebooks: architecture/decisions/004-notebook-organization.md
+      - ADR-005 Gold + Postgres: architecture/decisions/005-gold-postgres.md
+  - Pipeline:
+    - Orquestração (Airflow): pipeline/index.md
+  - Glossário: glossary.md
+  - Referências: references.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/felipp2t
