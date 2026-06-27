@@ -1,6 +1,8 @@
 """Utilitário compartilhado: cria SparkSession configurada para Delta Lake + MinIO."""
 
 import os
+import psycopg2
+from datetime import datetime
 from pyspark.sql import SparkSession
 
 
@@ -39,3 +41,48 @@ def postgres_props() -> dict:
         "password": os.getenv("POSTGRES_PASSWORD", "finops_pass"),
         "driver": "org.postgresql.Driver",
     }
+
+
+def _pg_conn():
+    return psycopg2.connect(
+        host=os.getenv("POSTGRES_HOST", "postgres"),
+        port=int(os.getenv("POSTGRES_PORT", "5432")),
+        dbname=os.getenv("POSTGRES_DB", "finops"),
+        user=os.getenv("POSTGRES_USER", "finops_user"),
+        password=os.getenv("POSTGRES_PASSWORD", "finops_pass"),
+    )
+
+
+def get_watermark(entity: str, default: str = "1970-01-01 00:00:00") -> str:
+    """Retorna o último timestamp processado para a entidade.
+
+    Se não houver watermark registrado (primeira execução), retorna `default`,
+    o que faz a query retornar todos os registros existentes.
+    """
+    with _pg_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT last_processed_at FROM finops_source.pipeline_watermarks WHERE entity = %s",
+                (entity,),
+            )
+            row = cur.fetchone()
+    return str(row[0]) if row else default
+
+
+def update_watermark(entity: str, new_watermark: datetime, row_count: int = 0) -> None:
+    """Grava ou atualiza o watermark da entidade após extração bem-sucedida."""
+    with _pg_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO finops_source.pipeline_watermarks
+                    (entity, last_processed_at, last_run_rows, updated_at)
+                VALUES (%s, %s, %s, NOW())
+                ON CONFLICT (entity) DO UPDATE SET
+                    last_processed_at = EXCLUDED.last_processed_at,
+                    last_run_rows     = EXCLUDED.last_run_rows,
+                    updated_at        = NOW()
+                """,
+                (entity, new_watermark, row_count),
+            )
+        conn.commit()
