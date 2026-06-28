@@ -14,7 +14,24 @@ Pipeline de dados com **arquitetura medallion** para o domínio de **FinOps (Clo
 
 ## Documentação completa
 
-Acesse a documentação em: **https://felipp2t.github.io/finops-pipeline/**
+Documentação publicada (MkDocs): **https://felipp2t.github.io/finops-pipeline/**
+
+**Como começar**
+- [Requisitos](https://felipp2t.github.io/finops-pipeline/getting-started/requirements/)
+- [Quickstart](https://felipp2t.github.io/finops-pipeline/getting-started/quickstart/)
+- [Configuração](https://felipp2t.github.io/finops-pipeline/getting-started/configuration/)
+
+**Arquitetura**
+- [Visão geral](https://felipp2t.github.io/finops-pipeline/architecture/)
+- [Modelo relacional](https://felipp2t.github.io/finops-pipeline/architecture/domain-model/)
+- [Modelo dimensional](https://felipp2t.github.io/finops-pipeline/architecture/dimensional-model/)
+- [Camadas Medallion](https://felipp2t.github.io/finops-pipeline/architecture/medallion/)
+- [Decisões de arquitetura (ADRs)](https://felipp2t.github.io/finops-pipeline/architecture/decisions/)
+
+**Pipeline e apoio**
+- [Orquestração (Airflow)](https://felipp2t.github.io/finops-pipeline/pipeline/)
+- [Glossário](https://felipp2t.github.io/finops-pipeline/glossary/)
+- [Referências](https://felipp2t.github.io/finops-pipeline/references/)
 
 ## Quickstart
 
