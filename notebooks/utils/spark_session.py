@@ -6,8 +6,25 @@ from datetime import datetime
 from pyspark.sql import SparkSession
 
 
+def _find_jars() -> str:
+    """Localiza os JARs no ambiente (Airflow: /opt/spark-jars, Jupyter: /opt/spark/jars)."""
+    jar_names = [
+        "postgresql-42.7.3.jar",
+        "delta-spark_2.12-3.2.0.jar",
+        "delta-storage-3.2.0.jar",
+        "hadoop-aws-3.3.4.jar",
+        "aws-java-sdk-bundle-1.12.262.jar",
+    ]
+    for base in ["/opt/spark-jars", "/opt/spark/jars"]:
+        found = [f"{base}/{j}" for j in jar_names if os.path.exists(f"{base}/{j}")]
+        if found:
+            return ":".join(found)
+    return ""
+
+
 def create_spark_session(app_name: str) -> SparkSession:
-    return (
+    jars = _find_jars()
+    builder = (
         SparkSession.builder
         .appName(app_name)
         .master(os.getenv("SPARK_MASTER_URL", "spark://spark-master:7077"))
@@ -24,8 +41,14 @@ def create_spark_session(app_name: str) -> SparkSession:
         # Performance
         .config("spark.sql.shuffle.partitions", "8")
         .config("spark.default.parallelism", "8")
-        .getOrCreate()
     )
+    if jars:
+        jars_csv = jars.replace(":", ",")
+        # PYSPARK_SUBMIT_ARGS é lido antes da JVM iniciar — garante que os JARs
+        # estejam no classpath do driver em modo client (Airflow/PapermillOperator)
+        os.environ.setdefault("PYSPARK_SUBMIT_ARGS", f"--jars {jars_csv} pyspark-shell")
+        builder = builder.config("spark.jars", jars_csv)
+    return builder.getOrCreate()
 
 
 def postgres_jdbc_url() -> str:
