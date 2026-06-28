@@ -1,3 +1,7 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# Falsos positivos dos type stubs: PySpark tipa `SparkSession.builder` como
+# classproperty (não resolve `.appName()`) e o stub do psycopg2 rejeita tuplas
+# em `cur.execute(...)`. Ambos são corretos em runtime.
 """Utilitário compartilhado: cria SparkSession configurada para Delta Lake + MinIO."""
 
 import os
