@@ -168,8 +168,7 @@ def generate_cost_entries(team_id: int, team: dict, start: date, end: date):
         for provider in PROVIDERS:
             # Cada provider tem chance de ter custo neste dia
             if random.random() > provider_weights.get(provider, 0.20):
-                current = current + timedelta(days=1)
-                break
+                continue
 
             for res in resources[provider]:
                 if random.random() < 0.90:  # 90% de dias ativos por recurso
