@@ -39,7 +39,7 @@ python scripts/02_seed.py
 ## Arquitetura
 
 ```
-PostgreSQL (fonte) → Landing (JSON) → Bronze (Delta) → Silver (Delta) → Gold (Delta + Postgres) → Metabase
+PostgreSQL (fonte) → Landing (CSV) → Bronze (Delta) → Silver (Delta) → Gold (Delta + Postgres) → Metabase
 ```
 
 Camadas orquestradas pelo **Airflow** via `PapermillOperator`, executando notebooks `.ipynb` com **PySpark**.
@@ -61,6 +61,10 @@ finops-pipeline/
 ├── dags/
 └── docs/          ← MkDocs
 ```
+
+## Contexto acadêmico
+
+Este projeto foi desenvolvido como trabalho da disciplina **Engenharia de Dados**, ministrada pelo professor **Jorge Luiz da Silva** ([@jlsilva01](https://github.com/jlsilva01)), aplicando na prática os conceitos ensinados sobre **Data Warehouse** e **Data Lake** — modelagem por camadas, arquitetura medallion (Landing → Bronze → Silver → Gold) e a separação entre camada de armazenamento (Delta Lake) e camada de consumo (serving layer para BI).
 
 ## Licença
 
