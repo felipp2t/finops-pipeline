@@ -2,37 +2,10 @@
 
 ## Diagrama ER — Schema `finops_source` (PostgreSQL)
 
-```
-┌──────────────────────────┐         ┌────────────────────────────────┐
-│          teams           │         │            budgets             │
-├──────────────────────────┤         ├────────────────────────────────┤
-│ id           SERIAL  PK  │◄────┐   │ id           SERIAL  PK        │
-│ name         VARCHAR(100)│     └───│ team_id      INT     FK        │
-│ cost_center  VARCHAR(20) │   1:N   │ year         INT               │
-│ department   VARCHAR(100)│         │ month        INT               │
-│ owner_email  VARCHAR(255)│         │ provider     VARCHAR(10)       │
-│ created_at   TIMESTAMP   │         │ amount_usd   NUMERIC(12,2)     │
-└──────────────────────────┘         │ created_at   TIMESTAMP         │
-            │                        └────────────────────────────────┘
-            │ 1:N
-            ▼
-┌───────────────────────────────────────────────────────┐
-│                     cost_entries                      │
-├───────────────────────────────────────────────────────┤
-│ id              SERIAL  PK                            │
-│ team_id         INT     FK → teams.id                 │
-│ resource_name   VARCHAR(200)                          │
-│ resource_type   VARCHAR(100)                          │
-│ provider        VARCHAR(10)  CHECK IN (AWS,GCP,Azure) │
-│ region          VARCHAR(50)                           │
-│ environment     VARCHAR(20)  CHECK IN (prod,staging,dev)│
-│ usage_date      DATE                                  │
-│ cost_usd        NUMERIC(10,4)                         │
-│ currency        VARCHAR(3)   DEFAULT 'USD'            │
-│ tags            JSONB                                 │
-│ created_at      TIMESTAMP                             │
-└───────────────────────────────────────────────────────┘
-```
+![Diagrama ER do schema finops_source — teams, budgets, cost_entries e pipeline_watermarks](../assets/er-finops-source.png)
+
+> Relacionamentos: `teams` 1:N `budgets` e `teams` 1:N `cost_entries` (via `team_id`).
+> `pipeline_watermarks` é tabela de controle do pipeline, sem relacionamento.
 
 ## Tabelas da origem
 
