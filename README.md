@@ -14,24 +14,7 @@ Pipeline de dados com **arquitetura medallion** para o domínio de **FinOps (Clo
 
 ## Documentação completa
 
-Documentação publicada (MkDocs): **https://felipp2t.github.io/finops-pipeline/**
-
-**Como começar**
-- [Requisitos](https://felipp2t.github.io/finops-pipeline/getting-started/requirements/)
-- [Quickstart](https://felipp2t.github.io/finops-pipeline/getting-started/quickstart/)
-- [Configuração](https://felipp2t.github.io/finops-pipeline/getting-started/configuration/)
-
-**Arquitetura**
-- [Visão geral](https://felipp2t.github.io/finops-pipeline/architecture/)
-- [Modelo relacional](https://felipp2t.github.io/finops-pipeline/architecture/domain-model/)
-- [Modelo dimensional](https://felipp2t.github.io/finops-pipeline/architecture/dimensional-model/)
-- [Camadas Medallion](https://felipp2t.github.io/finops-pipeline/architecture/medallion/)
-- [Decisões de arquitetura (ADRs)](https://felipp2t.github.io/finops-pipeline/architecture/decisions/)
-
-**Pipeline e apoio**
-- [Orquestração (Airflow)](https://felipp2t.github.io/finops-pipeline/pipeline/)
-- [Glossário](https://felipp2t.github.io/finops-pipeline/glossary/)
-- [Referências](https://felipp2t.github.io/finops-pipeline/references/)
+Acesse a documentação em: **https://felipp2t.github.io/finops-pipeline/**
 
 ## Quickstart
 
@@ -82,6 +65,20 @@ finops-pipeline/
 ## Contexto acadêmico
 
 Este projeto foi desenvolvido como trabalho da disciplina **Engenharia de Dados**, ministrada pelo professor **Jorge Luiz da Silva** ([@jlsilva01](https://github.com/jlsilva01)), aplicando na prática os conceitos ensinados sobre **Data Warehouse** e **Data Lake** — modelagem por camadas, arquitetura medallion (Landing → Bronze → Silver → Gold) e a separação entre camada de armazenamento (Delta Lake) e camada de consumo (serving layer para BI).
+
+## Referências
+
+Documentação oficial das tecnologias utilizadas:
+
+| Tecnologia | Link |
+|---|---|
+| Apache Spark | https://spark.apache.org/docs/latest/ |
+| Delta Lake | https://docs.delta.io/latest/index.html |
+| Apache Airflow | https://airflow.apache.org/docs/ |
+| MinIO | https://min.io/docs/minio/container/index.html |
+| Metabase | https://www.metabase.com/docs/latest/ |
+| Papermill | https://papermill.readthedocs.io/en/latest/ |
+| PySpark | https://spark.apache.org/docs/latest/api/python/ |
 
 ## Licença
 
