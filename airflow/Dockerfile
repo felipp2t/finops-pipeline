@@ -28,8 +28,11 @@ RUN mkdir -p /opt/spark-jars && \
 
 USER airflow
 
+# Providers instalados com constraints oficiais (garante compatibilidade com Airflow 2.9.3)
 RUN pip install --no-cache-dir \
     --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.3/constraints-3.11.txt" \
     apache-airflow-providers-papermill \
-    pyspark==3.5.1 \
     psycopg2-binary
+
+# PySpark separado — constraints do Airflow pinavam 3.5.1, mas driver e worker devem ter a mesma versão
+RUN pip install --no-cache-dir pyspark==3.5.5
