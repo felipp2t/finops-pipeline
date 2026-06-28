@@ -69,6 +69,7 @@ nav:
   - Arquitetura:
     - Visão geral: architecture/index.md
     - Modelo relacional: architecture/domain-model.md
+    - Modelo dimensional: architecture/dimensional-model.md
     - Camadas Medallion: architecture/medallion.md
     - Decisões (ADRs):
       - Índice: architecture/decisions/index.md
